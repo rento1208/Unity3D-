@@ -28,6 +28,7 @@ public class TimerManager : MonoBehaviour
         {
             currentTime = 0;
             isRunning = false;
+            ScoreManager.JudgeWinner();
             SceneManager.LoadScene("ResultScene");
         }
 

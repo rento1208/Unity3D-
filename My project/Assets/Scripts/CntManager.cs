@@ -9,6 +9,7 @@ public class CountdownManager : MonoBehaviour
     public Player1Controller player1;
     public Player2Controller player2;
     public TimerManager timermanager;
+    public AudioSource bgmSource;
 
     IEnumerator Start()
     {
@@ -37,5 +38,6 @@ public class CountdownManager : MonoBehaviour
         player1.enabled = true;
         player2.enabled = true;
         timermanager.isRunning = true;
+        bgmSource.Play();
     }
 }

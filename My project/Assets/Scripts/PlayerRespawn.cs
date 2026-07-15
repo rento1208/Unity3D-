@@ -26,7 +26,16 @@ public class PlayerRespawn : MonoBehaviour
     {
         deathCount++;
 
-        Debug.Log(gameObject.name + " の死亡回数：" + deathCount);
+        if (CompareTag("Player1"))
+        {
+            ScoreManager.p2Score++;
+        }
+        else if (CompareTag("Player2"))
+        {
+            ScoreManager.p1Score++;
+        }
+
+        Debug.Log($"P1:{ScoreManager.p1Score} P2:{ScoreManager.p2Score}");
 
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
