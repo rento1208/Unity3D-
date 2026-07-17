@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Player1
   - Player2
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
