@@ -11,8 +11,14 @@ public class CountdownManager : MonoBehaviour
     public TimerManager timermanager;
     public AudioSource bgmSource;
 
+    // ゲーム開始状態
+    public static bool gameStarted = false;
+
     IEnumerator Start()
     {
+        // 最初はゲーム開始前
+        gameStarted = false;
+
         // 最初は動けない
         player1.enabled = false;
         player2.enabled = false;
@@ -34,10 +40,15 @@ public class CountdownManager : MonoBehaviour
 
         countdownText.gameObject.SetActive(false);
 
+        // ゲーム開始
+        gameStarted = true;
+
         // 操作開始
         player1.enabled = true;
         player2.enabled = true;
+
         timermanager.isRunning = true;
+
         bgmSource.Play();
     }
 }

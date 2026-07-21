@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class ResultManager : MonoBehaviour
 {
@@ -49,7 +50,9 @@ public class ResultManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        // コントローラーのAボタン（PSなら×ボタン）
+        if (Gamepad.current != null &&
+            Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             ScoreManager.ResetScore();
             SceneManager.LoadScene("TitleScene");

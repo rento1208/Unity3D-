@@ -24,8 +24,10 @@ public class Player1Controller : MonoBehaviour
 
     void Update()
     {
-        // Spaceキーでジャンプ
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
+        // P1コントローラーのAボタンでジャンプ
+        if (Gamepad.all.Count > 0 &&
+            Gamepad.all[0].aButton.wasPressedThisFrame &&
+            isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
@@ -35,13 +37,20 @@ public class Player1Controller : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 移動入力
-        Vector3 input = Vector3.zero;
+        // P1コントローラーの左スティックから入力取得
+        Vector2 stickInput = Vector2.zero;
 
-        if (Keyboard.current.wKey.isPressed) input += Vector3.forward;
-        if (Keyboard.current.sKey.isPressed) input += Vector3.back;
-        if (Keyboard.current.aKey.isPressed) input += Vector3.left;
-        if (Keyboard.current.dKey.isPressed) input += Vector3.right;
+        if (Gamepad.all.Count > 0)
+        {
+            stickInput = Gamepad.all[0].leftStick.ReadValue();
+        }
+
+        // XZ方向へ移動
+        Vector3 input = new Vector3(
+            stickInput.x,
+            0f,
+            stickInput.y
+        );
 
         input = input.normalized;
 
