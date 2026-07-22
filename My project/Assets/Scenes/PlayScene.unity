@@ -1031,6 +1031,7 @@ GameObject:
   - component: {fileID: 379138332}
   - component: {fileID: 379138334}
   - component: {fileID: 379138335}
+  - component: {fileID: 379138336}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player1
@@ -1174,6 +1175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   respawnPoint: {fileID: 919986721}
   deathY: -10
+  respawnSound: {fileID: 8300000, guid: c3b7148ef6f874f46961c12e805feb52, type: 3}
   deathCount: 0
 --- !u!114 &379138335
 MonoBehaviour:
@@ -1192,9 +1194,107 @@ MonoBehaviour:
   fallMultiplier: 10
   attackRange: 2
   chargeSystem: {fileID: 1098216099}
-  audioSource: {fileID: 0}
-  normalAttackSE: {fileID: 0}
-  chargeAttackSE: {fileID: 0}
+  audioSource: {fileID: 379138336}
+  normalAttackSE: {fileID: 8300000, guid: 42e8a3ceb3aa47e4eb5cb2c6bdb6e94f, type: 3}
+  chargeAttackSE: {fileID: 8300000, guid: 83861b182ec82704184e837a6e766d6d, type: 3}
+  chargeStartSE: {fileID: 8300000, guid: 3bc7945f772f5db409fab774e19b06e1, type: 3}
+--- !u!82 &379138336
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379138326}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +2031,7 @@ GameObject:
   - component: {fileID: 885133549}
   - component: {fileID: 885133551}
   - component: {fileID: 885133552}
+  - component: {fileID: 885133553}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player2
@@ -2074,6 +2175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   respawnPoint: {fileID: 420735121}
   deathY: -10
+  respawnSound: {fileID: 8300000, guid: c3b7148ef6f874f46961c12e805feb52, type: 3}
   deathCount: 0
 --- !u!114 &885133552
 MonoBehaviour:
@@ -2091,10 +2193,108 @@ MonoBehaviour:
   jumpForce: 10
   fallMultiplier: 10
   attackRange: 2
-  audioSource: {fileID: 0}
-  normalAttackSE: {fileID: 0}
-  chargeAttackSE: {fileID: 0}
   chargeSystem: {fileID: 772660172}
+  audioSource: {fileID: 885133553}
+  normalAttackSE: {fileID: 8300000, guid: 42e8a3ceb3aa47e4eb5cb2c6bdb6e94f, type: 3}
+  chargeAttackSE: {fileID: 8300000, guid: 83861b182ec82704184e837a6e766d6d, type: 3}
+  chargeStartSE: {fileID: 8300000, guid: 3bc7945f772f5db409fab774e19b06e1, type: 3}
+--- !u!82 &885133553
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885133543}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &917573891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   respawnPoint: {fileID: 0}
   deathY: -10
+  respawnSound: {fileID: 0}
   deathCount: 0
 --- !u!4 &919986721
 Transform:

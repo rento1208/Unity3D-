@@ -16,14 +16,13 @@ public class Player2Controller : MonoBehaviour
     public float attackRange = 3f;
 
     [Header("チャージ")]
+    public ChargeSystem2 chargeSystem;
 
-    
     [Header("SE")]
     public AudioSource audioSource;
     public AudioClip normalAttackSE;
     public AudioClip chargeAttackSE;
-
-    public ChargeSystem2 chargeSystem;
+    public AudioClip chargeStartSE;
 
     private Rigidbody rb;
 
@@ -38,7 +37,6 @@ public class Player2Controller : MonoBehaviour
     {
         Debug.Log("Gamepad数：" + Gamepad.all.Count);
 
-       
         // P2コントローラーが接続されていない場合は処理しない
         if (Gamepad.all.Count <= 1)
         {
@@ -63,6 +61,12 @@ public class Player2Controller : MonoBehaviour
         if (gamepad.bButton.wasPressedThisFrame)
         {
             NormalAttack();
+        }
+
+        // Yボタンを押した瞬間
+        if (gamepad.yButton.wasPressedThisFrame)
+        {
+            audioSource.PlayOneShot(chargeStartSE);
         }
 
         // Yボタンを押している間チャージ
@@ -126,7 +130,7 @@ public class Player2Controller : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // P2が攻撃する相手はP1
+            // P1に当たった
             if (hit.CompareTag("Player1"))
             {
                 Player1Controller player1 =
@@ -143,6 +147,11 @@ public class Player2Controller : MonoBehaviour
                     player1.KnockBack(
                         direction,
                         400f
+                    );
+
+                    // ★P1に当たった時だけSE
+                    audioSource.PlayOneShot(
+                        normalAttackSE
                     );
                 }
             }
@@ -163,7 +172,7 @@ public class Player2Controller : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // P2が攻撃する相手はP1
+            // P1に当たった
             if (hit.CompareTag("Player1"))
             {
                 Player1Controller player1 =
@@ -180,6 +189,11 @@ public class Player2Controller : MonoBehaviour
                     player1.KnockBack(
                         direction,
                         power
+                    );
+
+                    // ★P1に当たった時だけSE
+                    audioSource.PlayOneShot(
+                        chargeAttackSE
                     );
                 }
             }

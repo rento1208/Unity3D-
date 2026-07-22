@@ -1106,6 +1106,7 @@ MonoBehaviour:
   rightResult: {fileID: 0}
   p1Kill: {fileID: 0}
   p2Kill: {fileID: 0}
+  resultSE: {fileID: 0}
 --- !u!1 &1223469972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,6 +1414,7 @@ MonoBehaviour:
   rightResult: {fileID: 1478753641}
   p1Kill: {fileID: 341815277}
   p2Kill: {fileID: 1223469974}
+  resultSE: {fileID: 8300000, guid: da3e6b785312f734e9bd9f9ae960cb1e, type: 3}
 --- !u!4 &1629691171
 Transform:
   m_ObjectHideFlags: 0

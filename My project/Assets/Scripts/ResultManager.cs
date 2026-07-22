@@ -11,6 +11,9 @@ public class ResultManager : MonoBehaviour
     public TMP_Text p1Kill;
     public TMP_Text p2Kill;
 
+    [Header("SE")]
+    public AudioClip resultSE;
+
     void Start()
     {
         Debug.Log("leftResult = " + leftResult);
@@ -46,6 +49,12 @@ public class ResultManager : MonoBehaviour
             leftResult.color = Color.white;
             rightResult.color = Color.white;
         }
+
+        // 結果画面が表示された時にSEを再生
+        AudioSource.PlayClipAtPoint(
+            resultSE,
+            Camera.main.transform.position
+        );
     }
 
     void Update()

@@ -6,8 +6,10 @@ public class PlayerRespawn : MonoBehaviour
     public Transform respawnPoint;
     public float deathY = -10f;
 
+    [Header("SE")]
+    public AudioClip respawnSound;
 
-private Rigidbody rb;
+    private Rigidbody rb;
 
     public int deathCount = 0;
 
@@ -60,6 +62,12 @@ private Rigidbody rb;
         transform.position = respawnPoint.position;
         transform.rotation = respawnPoint.rotation;
 
+        // リスポーン時のSE
+        AudioSource.PlayClipAtPoint(
+            respawnSound,
+            transform.position
+        );
+
         // 2秒間無敵＆点滅
         StartCoroutine(InvincibilityCoroutine());
     }
@@ -94,5 +102,4 @@ private Rigidbody rb;
 
         isInvincible = false;
     }
-
 }

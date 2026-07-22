@@ -22,7 +22,7 @@ public class Player1Controller : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip normalAttackSE;
     public AudioClip chargeAttackSE;
-
+    public AudioClip chargeStartSE;
 
     private Rigidbody rb;
 
@@ -59,6 +59,12 @@ public class Player1Controller : MonoBehaviour
         if (gamepad.bButton.wasPressedThisFrame)
         {
             NormalAttack();
+        }
+
+        // Yボタンを押した瞬間
+        if (gamepad.yButton.wasPressedThisFrame)
+        {
+            audioSource.PlayOneShot(chargeStartSE);
         }
 
         // Yボタンを押している間チャージ
@@ -122,7 +128,7 @@ public class Player1Controller : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // P2を攻撃
+            // P2に当たった
             if (hit.CompareTag("Player2"))
             {
                 Player2Controller player2 =
@@ -140,6 +146,11 @@ public class Player1Controller : MonoBehaviour
                     player2.KnockBack(
                         direction,
                         400f
+                    );
+
+                    // ★実際に当たった時だけSE
+                    audioSource.PlayOneShot(
+                        normalAttackSE
                     );
                 }
             }
@@ -160,7 +171,7 @@ public class Player1Controller : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // P2を攻撃
+            // P2に当たった
             if (hit.CompareTag("Player2"))
             {
                 Player2Controller player2 =
@@ -178,6 +189,11 @@ public class Player1Controller : MonoBehaviour
                     player2.KnockBack(
                         direction,
                         power
+                    );
+
+                    // ★実際に当たった時だけSE
+                    audioSource.PlayOneShot(
+                        chargeAttackSE
                     );
                 }
             }
