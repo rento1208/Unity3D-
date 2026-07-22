@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
 
 public class ChargeUI : MonoBehaviour
 {
@@ -9,10 +8,13 @@ public class ChargeUI : MonoBehaviour
     public Slider chargeSlider;
     public TMP_Text maxText;
 
-    [Header("チャージ設定")]
-    public float maxChargeTime = 3f;
+    [Header("ゲージ色")]
+    public Image fillImage;
+    public Color chargingColor = Color.white;
+    public Color maxColor = Color.red;
 
-    private float chargeTime = 0f;
+    [Header("チャージシステム")]
+    public ChargeSystem chargeSystem;
 
     void Start()
     {
@@ -25,42 +27,20 @@ public class ChargeUI : MonoBehaviour
 
     void Update()
     {
-        // FIGHT前はチャージできない
-        if (!CountdownManager.gameStarted)
+        chargeSlider.value = chargeSystem.ChargeRate;
+
+        bool isMax = chargeSystem.IsMax;
+
+        maxText.gameObject.SetActive(isMax);
+
+        // MAXかどうかでゲージ色を変更
+        if (isMax)
         {
-            return;
-        }
-
-        // P1コントローラーのYボタンを押している間チャージ
-        if (Gamepad.all.Count > 1 &&
-            Gamepad.all[0].yButton.isPressed)
-        {
-            chargeTime += Time.deltaTime;
-
-            // 最大値を超えないようにする
-            if (chargeTime >= maxChargeTime)
-            {
-                chargeTime = maxChargeTime;
-
-                // 最大チャージ
-                chargeSlider.value = 1f;
-                maxText.gameObject.SetActive(true);
-            }
-            else
-            {
-                // 最大未満
-                chargeSlider.value =
-                    chargeTime / maxChargeTime;
-
-                maxText.gameObject.SetActive(false);
-            }
+            fillImage.color = maxColor;
         }
         else
         {
-            // ボタンを離したらリセット
-            chargeTime = 0f;
-            chargeSlider.value = 0f;
-            maxText.gameObject.SetActive(false);
+            fillImage.color = chargingColor;
         }
     }
 }

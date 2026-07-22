@@ -363,7 +363,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: 0}
-  m_LocalScale: {x: 80, y: 10, z: 80}
+  m_LocalScale: {x: 60, y: 10, z: 60}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1127,7 +1127,7 @@ Transform:
   m_GameObject: {fileID: 379138326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5586, y: 28, z: -7702.7}
+  m_LocalPosition: {x: -5577.3, y: 28, z: -7712.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1187,9 +1187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d9f4525dda34245b69043df9aef313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player2Controller
-  moveSpeed: 25
-  jumpForce: 5
+  moveSpeed: 35
+  jumpForce: 10
   fallMultiplier: 10
+  attackRange: 2
+  chargeSystem: {fileID: 1098216099}
+  audioSource: {fileID: 0}
+  normalAttackSE: {fileID: 0}
+  chargeAttackSE: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1347,7 @@ Transform:
   m_GameObject: {fileID: 420735120}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5514.104, y: 27.12, z: -7777.8813}
+  m_LocalPosition: {x: -5522, y: 27.12, z: -7767.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1403,7 +1408,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChargeUI
   chargeSlider: {fileID: 1730185578}
   maxText: {fileID: 217382182}
-  maxChargeTime: 3
+  fillImage: {fileID: 1244063458}
+  chargingColor: {r: 0.2330097, g: 0.105882324, b: 0.89411765, a: 1}
+  maxColor: {r: 0, g: 0.011205435, b: 1, a: 1}
+  chargeSystem: {fileID: 1098216099}
 --- !u!114 &449602189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1814,6 +1822,51 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &772660171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772660173}
+  - component: {fileID: 772660172}
+  m_Layer: 0
+  m_Name: ChargeSystem2Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &772660172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772660171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54321a47590a11042a63ab2ebfb99716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChargeSystem2
+  maxChargeTime: 3
+--- !u!4 &772660173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772660171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.67068, y: 15, z: 3.94889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,7 +2027,7 @@ Transform:
   m_GameObject: {fileID: 885133543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5514.4, y: 28.1, z: -7776.3}
+  m_LocalPosition: {x: -5522.8, y: 28.1, z: -7766.2}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2034,9 +2087,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a12d32e146c284fbfc89839e5af210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player1Controller
-  moveSpeed: 25
-  jumpForce: 5
+  moveSpeed: 35
+  jumpForce: 10
   fallMultiplier: 10
+  attackRange: 2
+  audioSource: {fileID: 0}
+  normalAttackSE: {fileID: 0}
+  chargeAttackSE: {fileID: 0}
+  chargeSystem: {fileID: 772660172}
 --- !u!1 &917573891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2215,7 +2273,7 @@ Transform:
   m_GameObject: {fileID: 919986719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5585.754, y: 28.53807, z: -7703.3613}
+  m_LocalPosition: {x: -5578.2, y: 28.53807, z: -7711.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2413,7 +2471,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChargeUI2
   chargeSlider: {fileID: 763091164}
   maxText: {fileID: 1747796323}
-  maxChargeTime: 3
+  fillImage: {fileID: 1940675992}
+  chargingColor: {r: 0.89433956, g: 0.065809794, b: 0.065809794, a: 1}
+  maxColor: {r: 1, g: 0, b: 0, a: 1}
+  chargeSystem: {fileID: 772660172}
 --- !u!114 &1017802769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2553,6 +2614,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036417181}
   m_CullTransparentMesh: 1
+--- !u!1 &1098216098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1098216100}
+  - component: {fileID: 1098216099}
+  m_Layer: 0
+  m_Name: ChargeSystemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1098216099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098216098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1d5c57fad2b1a43a111e9178c26a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChargeSystem
+  maxChargeTime: 3
+--- !u!4 &1098216100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098216098}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.67068, y: 15, z: 3.94889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1216310899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3796,3 +3902,5 @@ SceneRoots:
   - {fileID: 190035886}
   - {fileID: 1216310903}
   - {fileID: 2024691147}
+  - {fileID: 1098216100}
+  - {fileID: 772660173}

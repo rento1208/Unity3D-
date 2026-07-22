@@ -12,6 +12,19 @@ public class Player2Controller : MonoBehaviour
     [Header("落下")]
     public float fallMultiplier = 10.0f;
 
+    [Header("攻撃")]
+    public float attackRange = 3f;
+
+    [Header("チャージ")]
+
+    
+    [Header("SE")]
+    public AudioSource audioSource;
+    public AudioClip normalAttackSE;
+    public AudioClip chargeAttackSE;
+
+    public ChargeSystem2 chargeSystem;
+
     private Rigidbody rb;
 
     private bool isGrounded;
@@ -23,14 +36,47 @@ public class Player2Controller : MonoBehaviour
 
     void Update()
     {
-        // P2コントローラーのAボタンでジャンプ
-        if (Gamepad.all.Count > 1 &&
-            Gamepad.all[1].aButton.wasPressedThisFrame &&
+        Debug.Log("Gamepad数：" + Gamepad.all.Count);
+
+       
+        // P2コントローラーが接続されていない場合は処理しない
+        if (Gamepad.all.Count <= 1)
+        {
+            return;
+        }
+
+        Gamepad gamepad = Gamepad.all[1];
+
+        // Aボタンでジャンプ
+        if (gamepad.aButton.wasPressedThisFrame &&
             isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(
+                Vector3.up * jumpForce,
+                ForceMode.Impulse
+            );
 
             isGrounded = false;
+        }
+
+        // Bボタンで通常攻撃
+        if (gamepad.bButton.wasPressedThisFrame)
+        {
+            NormalAttack();
+        }
+
+        // Yボタンを押している間チャージ
+        if (gamepad.yButton.isPressed)
+        {
+            chargeSystem.AddCharge(
+                Time.deltaTime
+            );
+        }
+
+        // Yボタンを離した瞬間にチャージ攻撃
+        if (gamepad.yButton.wasReleasedThisFrame)
+        {
+            ChargeAttack();
         }
     }
 
@@ -41,7 +87,8 @@ public class Player2Controller : MonoBehaviour
         // P2コントローラー
         if (Gamepad.all.Count > 1)
         {
-            stickInput = Gamepad.all[1].leftStick.ReadValue();
+            stickInput =
+                Gamepad.all[1].leftStick.ReadValue();
         }
 
         Vector3 input = new Vector3(
@@ -69,16 +116,88 @@ public class Player2Controller : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    // P2の通常攻撃
+    void NormalAttack()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            attackRange
+        );
+
+        foreach (Collider hit in hits)
         {
-            isGrounded = true;
+            // P2が攻撃する相手はP1
+            if (hit.CompareTag("Player1"))
+            {
+                Player1Controller player1 =
+                    hit.GetComponent<Player1Controller>();
+
+                if (player1 != null)
+                {
+                    Vector3 direction =
+                        player1.transform.position -
+                        transform.position;
+
+                    direction.y = 0f;
+
+                    player1.KnockBack(
+                        direction,
+                        400f
+                    );
+                }
+            }
         }
     }
 
-    public void KnockBack(Vector3 direction, float power)
+    // P2のチャージ攻撃
+    void ChargeAttack()
     {
-        rb.AddForce(direction.normalized * power, ForceMode.Impulse);
+        // チャージ量に応じた威力
+        float power =
+            chargeSystem.GetKnockbackPower();
+
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            attackRange
+        );
+
+        foreach (Collider hit in hits)
+        {
+            // P2が攻撃する相手はP1
+            if (hit.CompareTag("Player1"))
+            {
+                Player1Controller player1 =
+                    hit.GetComponent<Player1Controller>();
+
+                if (player1 != null)
+                {
+                    Vector3 direction =
+                        player1.transform.position -
+                        transform.position;
+
+                    direction.y = 0f;
+
+                    player1.KnockBack(
+                        direction,
+                        power
+                    );
+                }
+            }
+        }
+
+        // 攻撃後にチャージをリセット
+        chargeSystem.ResetCharge();
+    }
+
+    // ノックバック用
+    public void KnockBack(
+        Vector3 direction,
+        float power
+    )
+    {
+        rb.AddForce(
+            direction.normalized * power,
+            ForceMode.Impulse
+        );
     }
 }

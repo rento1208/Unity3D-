@@ -12,9 +12,20 @@ public class Player1Controller : MonoBehaviour
     [Header("落下")]
     public float fallMultiplier = 10.0f;
 
+    [Header("攻撃")]
+    public float attackRange = 3f;
+
+    [Header("チャージ")]
+    public ChargeSystem chargeSystem;
+
+    [Header("SE")]
+    public AudioSource audioSource;
+    public AudioClip normalAttackSE;
+    public AudioClip chargeAttackSE;
+
+
     private Rigidbody rb;
 
-    // 地面に接地しているか
     private bool isGrounded;
 
     void Start()
@@ -24,28 +35,58 @@ public class Player1Controller : MonoBehaviour
 
     void Update()
     {
-        // P1コントローラーのAボタンでジャンプ
-        if (Gamepad.all.Count > 0 &&
-            Gamepad.all[0].aButton.wasPressedThisFrame &&
+        // P1コントローラーが接続されていない場合は処理しない
+        if (Gamepad.all.Count <= 0)
+        {
+            return;
+        }
+
+        Gamepad gamepad = Gamepad.all[0];
+
+        // Aボタンでジャンプ
+        if (gamepad.aButton.wasPressedThisFrame &&
             isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(
+                Vector3.up * jumpForce,
+                ForceMode.Impulse
+            );
 
             isGrounded = false;
+        }
+
+        // Bボタンで通常攻撃
+        if (gamepad.bButton.wasPressedThisFrame)
+        {
+            NormalAttack();
+        }
+
+        // Yボタンを押している間チャージ
+        if (gamepad.yButton.isPressed)
+        {
+            chargeSystem.AddCharge(
+                Time.deltaTime
+            );
+        }
+
+        // Yボタンを離した瞬間にチャージ攻撃
+        if (gamepad.yButton.wasReleasedThisFrame)
+        {
+            ChargeAttack();
         }
     }
 
     void FixedUpdate()
     {
-        // P1コントローラーの左スティックから入力取得
         Vector2 stickInput = Vector2.zero;
 
+        // P1コントローラー
         if (Gamepad.all.Count > 0)
         {
-            stickInput = Gamepad.all[0].leftStick.ReadValue();
+            stickInput =
+                Gamepad.all[0].leftStick.ReadValue();
         }
 
-        // XZ方向へ移動
         Vector3 input = new Vector3(
             stickInput.x,
             0f,
@@ -54,7 +95,6 @@ public class Player1Controller : MonoBehaviour
 
         input = input.normalized;
 
-        // XZだけ変更してYは維持
         Vector3 velocity = rb.linearVelocity;
 
         velocity.x = input.x * moveSpeed;
@@ -72,8 +112,85 @@ public class Player1Controller : MonoBehaviour
         }
     }
 
+    // 通常攻撃処理
+    void NormalAttack()
+    {
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            attackRange
+        );
+
+        foreach (Collider hit in hits)
+        {
+            // P2を攻撃
+            if (hit.CompareTag("Player2"))
+            {
+                Player2Controller player2 =
+                    hit.GetComponent<Player2Controller>();
+
+                if (player2 != null)
+                {
+                    Vector3 direction =
+                        player2.transform.position -
+                        transform.position;
+
+                    // 上方向には飛ばさない
+                    direction.y = 0f;
+
+                    player2.KnockBack(
+                        direction,
+                        400f
+                    );
+                }
+            }
+        }
+    }
+
+    // チャージ攻撃処理
+    void ChargeAttack()
+    {
+        // チャージ量に応じた攻撃力を取得
+        float power =
+            chargeSystem.GetKnockbackPower();
+
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            attackRange
+        );
+
+        foreach (Collider hit in hits)
+        {
+            // P2を攻撃
+            if (hit.CompareTag("Player2"))
+            {
+                Player2Controller player2 =
+                    hit.GetComponent<Player2Controller>();
+
+                if (player2 != null)
+                {
+                    Vector3 direction =
+                        player2.transform.position -
+                        transform.position;
+
+                    // 上方向には飛ばさない
+                    direction.y = 0f;
+
+                    player2.KnockBack(
+                        direction,
+                        power
+                    );
+                }
+            }
+        }
+
+        // 攻撃後にチャージをリセット
+        chargeSystem.ResetCharge();
+    }
+
     // 地面に着いた
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(
+        Collision collision
+    )
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -82,8 +199,14 @@ public class Player1Controller : MonoBehaviour
     }
 
     // ノックバック用
-    public void KnockBack(Vector3 direction, float power)
+    public void KnockBack(
+        Vector3 direction,
+        float power
+    )
     {
-        rb.AddForce(direction.normalized * power, ForceMode.Impulse);
+        rb.AddForce(
+            direction.normalized * power,
+            ForceMode.Impulse
+        );
     }
 }
